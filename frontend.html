@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDS Natural Language Query</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .container { background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .results { background: white; padding: 15px; border-radius: 4px; margin-top: 15px; }
+        .error { color: red; background: #ffe6e6; padding: 10px; border-radius: 4px; }
+        .success { color: green; background: #e6ffe6; padding: 10px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .sql-query { background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>RDS Natural Language Query System</h1>
+    
+    <!-- Database Connection Form -->
+    <div class="container">
+        <h2>Database Connection</h2>
+        <form id="connectionForm">
+            <div class="form-group">
+                <label>Connection Name:</label>
+                <input type="text" id="connectionName" required>
+            </div>
+            <div class="form-group">
+                <label>Host:</label>
+                <input type="text" id="host" placeholder="your-rds-endpoint.amazonaws.com" required>
+            </div>
+            <div class="form-group">
+                <label>Port:</label>
+                <input type="number" id="port" value="5432" required>
+            </div>
+            <div class="form-group">
+                <label>Database Name:</label>
+                <input type="text" id="databaseName" required>
+            </div>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label>Engine:</label>
+                <select id="engine" required>
+                    <option value="postgresql">PostgreSQL</option>
+                    <option value="mysql">MySQL</option>
+                </select>
+            </div>
+            <button type="submit">Create Connection</button>
+        </form>
+        <div id="connectionResult"></div>
+    </div>
+
+    <!-- Query Form -->
+    <div class="container">
+        <h2>Natural Language Query</h2>
+        <form id="queryForm">
+            <div class="form-group">
+                <label>Database Connection:</label>
+                <select id="connectionSelect" required>
+                    <option value="">Select a connection...</option>
+                </select>
+                <button type="button" onclick="loadConnections()">Refresh Connections</button>
+            </div>
+            <div class="form-group">
+                <label>OpenAI API Key:</label>
+                <input type="password" id="openaiKey" placeholder="sk-..." required>
+            </div>
+            <div class="form-group">
+                <label>Natural Language Query:</label>
+                <textarea id="naturalQuery" rows="3" placeholder="e.g., Show me all users who registered last month" required></textarea>
+            </div>
+            <button type="submit">Execute Query</button>
+        </form>
+        <div id="queryResult"></div>
+    </div>
+
+    <!-- Query History -->
+    <div class="container">
+        <h2>Query History</h2>
+        <button onclick="loadHistory()">Load History</button>
+        <div id="historyResult"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+
+        // Create database connection
+        document.getElementById('connectionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                name: document.getElementById('connectionName').value,
+                host: document.getElementById('host').value,
+                port: parseInt(document.getElementById('port').value),
+                database_name: document.getElementById('databaseName').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                engine: document.getElementById('engine').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/connections/create/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                const resultDiv = document.getElementById('connectionResult');
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div class="success">Connection created successfully! ID: ${result.id}</div>`;
+                    loadConnections();
+                } else {
+                    resultDiv.innerHTML = `<div class="error">Error: ${result.error || JSON.stringify(result)}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('connectionResult').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        });
+
+        // Load database connections
+        async function loadConnections() {
+            try {
+                const response = await fetch(`${API_BASE}/connections/`);
+                const connections = await response.json();
+                
+                const select = document.getElementById('connectionSelect');
+                select.innerHTML = '<option value="">Select a connection...</option>';
+                
+                connections.forEach(conn => {
+                    const option = document.createElement('option');
+                    option.value = conn.id;
+                    option.textContent = `${conn.name} (${conn.host})`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading connections:', error);
+            }
+        }
+
+        // Execute natural language query
+        document.getElementById('queryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                natural_query: document.getElementById('naturalQuery').value,
+                database_connection_id: parseInt(document.getElementById('connectionSelect').value),
+                openai_api_key: document.getElementById('openaiKey').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/query/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                const resultDiv = document.getElementById('queryResult');
+
+                if (response.ok) {
+                    let html = `<div class="success">Query executed successfully!</div>`;
+                    html += `<div class="sql-query"><strong>Generated SQL:</strong><br>${result.generated_sql}</div>`;
+                    html += `<div><strong>Execution Time:</strong> ${result.execution_time.toFixed(3)}s</div>`;
+                    
+                    if (result.results && result.results.length > 0) {
+                        html += `<div><strong>Results (${result.results.length} rows):</strong></div>`;
+                        html += '<table><thead><tr>';
+                        
+                        result.columns.forEach(col => {
+                            html += `<th>${col}</th>`;
+                        });
+                        html += '</tr></thead><tbody>';
+                        
+                        result.results.slice(0, 100).forEach(row => {
+                            html += '<tr>';
+                            result.columns.forEach(col => {
+                                html += `<td>${row[col] || ''}</td>`;
+                            });
+                            html += '</tr>';
+                        });
+                        html += '</tbody></table>';
+                        
+                        if (result.results.length > 100) {
+                            html += '<div><em>Showing first 100 rows only</em></div>';
+                        }
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">Error: ${result.error || JSON.stringify(result)}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('queryResult').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        });
+
+        // Load query history
+        async function loadHistory() {
+            try {
+                const response = await fetch(`${API_BASE}/history/`);
+                const history = await response.json();
+                
+                let html = `<div><strong>Query History (${history.length} entries):</strong></div>`;
+                
+                history.forEach(entry => {
+                    const status = entry.success ? 'success' : 'error';
+                    html += `<div class="results">
+                        <div><strong>Query:</strong> ${entry.natural_query}</div>
+                        <div class="sql-query">${entry.generated_sql}</div>
+                        <div><strong>Status:</strong> <span class="${status}">${entry.success ? 'Success' : 'Failed'}</span></div>
+                        ${entry.execution_time ? `<div><strong>Time:</strong> ${entry.execution_time.toFixed(3)}s</div>` : ''}
+                        ${entry.error_message ? `<div class="error">${entry.error_message}</div>` : ''}
+                        <div><strong>Date:</strong> ${new Date(entry.created_at).toLocaleString()}</div>
+                    </div>`;
+                });
+                
+                document.getElementById('historyResult').innerHTML = html;
+            } catch (error) {
+                document.getElementById('historyResult').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Load connections on page load
+        loadConnections();
+    </script>
+</body>
+</html>
