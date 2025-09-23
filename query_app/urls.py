@@ -1,10 +1,9 @@
 from django.urls import path
-from . import views
+from .views import SchemaView, QueryView, HistoryView, ClearHistoryView
 
 urlpatterns = [
-    path('connections/', views.list_database_connections, name='list_connections'),
-    path('connections/create/', views.create_database_connection, name='create_connection'),
-    path('connections/<int:connection_id>/schema/', views.get_database_schema, name='get_schema'),
-    path('query/', views.execute_natural_query, name='execute_query'),
-    path('history/', views.get_query_history, name='query_history'),
+    path('schema/', SchemaView.as_view(), name='get_schema'),
+    path('query/', QueryView.as_view(), name='execute_query'),
+    path('history/', HistoryView.as_view(), name='query_history'),
+    path('history/clear/', ClearHistoryView.as_view(), name='clear_query_history'),
 ]

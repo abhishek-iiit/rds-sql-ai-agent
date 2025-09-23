@@ -55,12 +55,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'rds_nl_query.wsgi.application'
 
+# Database configuration from environment variables
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# External database configuration for queries
+EXTERNAL_DATABASE = {
+    'HOST': os.getenv('DB_HOST'),
+    'PORT': int(os.getenv('DB_PORT', 5432)),
+    'NAME': os.getenv('DB_NAME'),
+    'USER': os.getenv('DB_USER'),
+    'PASSWORD': os.getenv('DB_PASSWORD'),
+    'ENGINE': os.getenv('DB_ENGINE', 'postgresql'),
+}
+
+# OpenAI configuration
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

@@ -13,124 +13,175 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
             margin: 0; 
             padding: 16px; 
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0b1220 100%);
+            color: #e2e8f0;
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         .main-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
         h1 {
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 24px;
-            font-size: 2rem;
+            margin-bottom: 32px;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #34d399);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 6px 24px rgba(80, 200, 255, 0.25);
         }
         
         .container { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #e9ecef;
+            background: rgba(15, 23, 42, 0.55); 
+            padding: 24px; 
+            border-radius: 16px; 
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+            border-color: rgba(148, 163, 184, 0.3);
         }
         
         h2 {
-            color: #495057;
+            color: #e2e8f0;
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::after {
+            content: '';
+            display: inline-block;
+            width: 60px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #34d399);
+            opacity: 0.6;
         }
         
         .form-group { 
-            margin-bottom: 16px; 
+            margin-bottom: 20px; 
         }
         
         label { 
             display: block; 
-            margin-bottom: 6px; 
+            margin-bottom: 8px; 
             font-weight: 600; 
-            color: #495057;
-        }
-        
-        input, select, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            border: 2px solid #e9ecef; 
-            border-radius: 8px; 
+            color: #cbd5e1;
             font-size: 14px;
-            transition: border-color 0.2s ease;
         }
         
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
-        
-        textarea {
+        textarea { 
+            width: 100%; 
+            padding: 16px; 
+            background: rgba(2, 6, 23, 0.4);
+            color: #e2e8f0;
+            border: 1.5px solid rgba(148, 163, 184, 0.25); 
+            border-radius: 12px; 
+            font-size: 14px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: rgba(99, 102, 241, 0.75);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18), inset 0 1px 0 rgba(255,255,255,0.05);
+            transform: translateY(-1px);
         }
         
         button { 
-            background: #007bff; 
-            color: white; 
-            padding: 12px 24px; 
+            background: linear-gradient(135deg, #3b82f6, #6366f1); 
+            color: #ecfeff; 
+            padding: 14px 28px; 
             border: none; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             cursor: pointer; 
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
+            min-width: 140px;
+            box-shadow: 0 10px 24px rgba(59, 130, 246, 0.25);
         }
         
         button:hover { 
-            background: #0056b3; 
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+            box-shadow: 0 16px 30px rgba(99, 102, 241, 0.35);
+        }
+        .button-secondary {
+            background: transparent;
+            color: #e2e8f0;
+            border: 1.5px solid rgba(148, 163, 184, 0.4);
+            box-shadow: none;
+        }
+        .button-secondary:hover {
+            background: rgba(148, 163, 184, 0.12);
+            box-shadow: 0 8px 20px rgba(148, 163, 184, 0.15);
         }
         
         button:disabled {
-            background: #6c757d;
+            background: #475569;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         .button-group {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             flex-wrap: wrap;
-            margin-top: 16px;
+            margin-top: 20px;
         }
         
         .results { 
-            background: #f8f9fa; 
-            padding: 16px; 
-            border-radius: 8px; 
-            margin-top: 16px; 
-            border: 1px solid #e9ecef;
+            background: rgba(2, 6, 23, 0.45); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-top: 20px; 
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            color: #cbd5e1;
         }
         
         .error { 
-            color: #dc3545; 
-            background: #f8d7da; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #f5c6cb;
+            color: #fecaca; 
+            background: rgba(239, 68, 68, 0.12); 
+            padding: 16px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            margin: 16px 0;
         }
         
         .success { 
-            color: #155724; 
-            background: #d4edda; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #c3e6cb;
+            color: #bbf7d0; 
+            background: rgba(34, 197, 94, 0.12); 
+            padding: 16px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            margin: 16px 0;
         }
         
         .table-container {
             overflow-x: auto;
-            margin-top: 16px;
+            margin-top: 20px;
             border: 1px solid #e9ecef;
             border-radius: 8px;
         }
@@ -140,53 +191,111 @@
             border-collapse: collapse; 
             margin: 0;
             min-width: 600px;
+            color: #e2e8f0;
         }
         
         th, td { 
-            border: 1px solid #e9ecef; 
-            padding: 12px 8px; 
+            border: 1px solid rgba(148, 163, 184, 0.15); 
+            padding: 12px 16px; 
             text-align: left; 
             font-size: 14px;
         }
         
         th { 
-            background-color: #f8f9fa; 
+            background: rgba(148, 163, 184, 0.08); 
             font-weight: 600;
-            color: #495057;
+            color: #cbd5e1;
             position: sticky;
             top: 0;
             z-index: 10;
         }
         
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: rgba(148, 163, 184, 0.05);
         }
         
         .sql-query { 
-            background: #f8f9fa; 
-            padding: 16px; 
-            border-radius: 8px; 
+            background: rgba(2, 6, 23, 0.55); 
+            padding: 20px; 
+            border-radius: 12px; 
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace; 
-            margin: 12px 0; 
-            border: 1px solid #e9ecef;
-            font-size: 13px;
-            line-height: 1.5;
+            margin: 16px 0; 
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            font-size: 14px;
+            line-height: 1.6;
             overflow-x: auto;
+            white-space: pre-wrap;
+            color: #f1f5f9;
         }
         
         .query-info {
             display: flex;
             gap: 24px;
-            margin: 12px 0;
+            margin: 16px 0;
             flex-wrap: wrap;
         }
         
         .query-info > div {
-            background: #e9ecef;
-            padding: 8px 12px;
-            border-radius: 6px;
+            background: rgba(148, 163, 184, 0.10);
+            padding: 12px 16px;
+            border-radius: 10px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-success {
+            background-color: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.55);
+        }
+        
+        .status-error {
+            background-color: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.55);
+        }
+
+        .status-indicator {
+            position: relative;
+        }
+        .status-indicator::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            animation: pulse 1.6s ease-out infinite;
+        }
+        .status-success::after { background-color: rgba(34, 197, 94, 0.35); }
+        .status-error::after { background-color: rgba(239, 68, 68, 0.35); }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            70% { transform: scale(2.2); opacity: 0; }
+            100% { transform: scale(2.2); opacity: 0; }
         }
         
         /* Responsive Design */
@@ -196,11 +305,11 @@
             }
             
             .container {
-                padding: 16px;
+                padding: 20px;
             }
             
             h1 {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
             
             .button-group {
@@ -213,11 +322,11 @@
             
             .query-info {
                 flex-direction: column;
-                gap: 8px;
+                gap: 12px;
             }
             
             th, td {
-                padding: 8px 6px;
+                padding: 10px 12px;
                 font-size: 13px;
             }
         }
@@ -228,15 +337,15 @@
             }
             
             .container {
-                padding: 12px;
+                padding: 16px;
             }
             
             h1 {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
             }
             
             h2 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -245,219 +354,161 @@
     <div class="main-container">
         <h1>RDS Natural Language Query System</h1>
     
-    <!-- Database Connection Form -->
-    <div class="container">
-        <h2>Database Connection</h2>
-        <form id="connectionForm">
-            <div class="form-group">
-                <label>Connection Name:</label>
-                <input type="text" id="connectionName" required>
-            </div>
-            <div class="form-group">
-                <label>Host:</label>
-                <input type="text" id="host" placeholder="your-rds-endpoint.amazonaws.com" required>
-            </div>
-            <div class="form-group">
-                <label>Port:</label>
-                <input type="number" id="port" value="5432" required>
-            </div>
-            <div class="form-group">
-                <label>Database Name:</label>
-                <input type="text" id="databaseName" required>
-            </div>
-            <div class="form-group">
-                <label>Username:</label>
-                <input type="text" id="username" required>
-            </div>
-            <div class="form-group">
-                <label>Password:</label>
-                <input type="password" id="password" required>
-            </div>
-            <div class="form-group">
-                <label>Engine:</label>
-                <select id="engine" required>
-                    <option value="postgresql">PostgreSQL</option>
-                    <option value="mysql">MySQL</option>
-                </select>
-            </div>
-            <button type="submit">Create Connection</button>
-        </form>
-        <div id="connectionResult"></div>
-    </div>
-
-    <!-- Query Form -->
-    <div class="container">
-        <h2>Natural Language Query</h2>
-        <form id="queryForm">
-            <div class="form-group">
-                <label>Database Connection:</label>
-                <select id="connectionSelect" required>
-                    <option value="">Select a connection...</option>
-                </select>
-                <div class="button-group">
-                    <button type="button" onclick="loadConnections()">Refresh Connections</button>
+        <!-- Natural Language Query Form -->
+        <div class="container">
+            <h2>Natural Language Query</h2>
+            <form id="queryForm">
+                <div class="form-group">
+                    <label for="naturalQuery">Enter your question in natural language:</label>
+                    <textarea 
+                        id="naturalQuery" 
+                        rows="4" 
+                        placeholder="e.g., Show me all users who registered last month and their total orders"
+                        required
+                    ></textarea>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>OpenAI API Key:</label>
-                <input type="password" id="openaiKey" placeholder="sk-..." required>
-            </div>
-            <div class="form-group">
-                <label>Natural Language Query:</label>
-                <textarea id="naturalQuery" rows="3" placeholder="e.g., Show me all users who registered last month" required></textarea>
-            </div>
-            <button type="submit">Execute Query</button>
-        </form>
-        <div id="queryResult"></div>
-    </div>
-
-    <!-- Query History -->
-    <div class="container">
-        <h2>Query History</h2>
-        <div class="button-group">
-            <button onclick="loadHistory()">Load History</button>
+                <div class="button-group">
+                    <button type="submit" id="executeBtn">
+                        <span id="executeText">Execute Query</span>
+                        <span id="executeLoading" class="loading" style="display: none;"></span>
+                    </button>
+                    <button type="button" class="button-secondary" onclick="clearForm()">Clear</button>
+                </div>
+            </form>
+            <div id="queryResult"></div>
         </div>
-        <div id="historyResult"></div>
-    </div>
+
+        <!-- Query History -->
+        <div class="container" id="historySection">
+            <h2>Query History</h2>
+            <div class="button-group">
+                <button type="button" onclick="loadHistory()" id="historyBtn">
+                    <span id="historyText">Load History</span>
+                    <span id="historyLoading" class="loading" style="display: none;"></span>
+                </button>
+                <button type="button" onclick="clearHistory()" class="button-secondary">Clear History</button>
+            </div>
+            <div id="historyResult"></div>
+        </div>
     </div>
 
     <script>
         const API_BASE = 'http://localhost:8000/api';
 
-        // Create database connection
-        document.getElementById('connectionForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const data = {
-                name: document.getElementById('connectionName').value,
-                host: document.getElementById('host').value,
-                port: parseInt(document.getElementById('port').value),
-                database_name: document.getElementById('databaseName').value,
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value,
-                engine: document.getElementById('engine').value
-            };
-
-            try {
-                const response = await fetch(`${API_BASE}/connections/create/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-                const resultDiv = document.getElementById('connectionResult');
-
-                if (response.ok) {
-                    resultDiv.innerHTML = `<div class="success">Connection created successfully! ID: ${result.id}</div>`;
-                    loadConnections();
-                } else {
-                    resultDiv.innerHTML = `<div class="error">Error: ${result.error || JSON.stringify(result)}</div>`;
-                }
-            } catch (error) {
-                document.getElementById('connectionResult').innerHTML = `<div class="error">Error: ${error.message}</div>`;
-            }
-        });
-
-        // Load database connections
-        async function loadConnections() {
-            try {
-                const response = await fetch(`${API_BASE}/connections/`);
-                const connections = await response.json();
-                
-                const select = document.getElementById('connectionSelect');
-                select.innerHTML = '<option value="">Select a connection...</option>';
-                
-                connections.forEach(conn => {
-                    const option = document.createElement('option');
-                    option.value = conn.id;
-                    option.textContent = `${conn.name} (${conn.host})`;
-                    select.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading connections:', error);
-            }
-        }
-
         // Execute natural language query
         document.getElementById('queryForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const data = {
-                natural_query: document.getElementById('naturalQuery').value,
-                database_connection_id: parseInt(document.getElementById('connectionSelect').value),
-                openai_api_key: document.getElementById('openaiKey').value
-            };
+            const query = document.getElementById('naturalQuery').value.trim();
+            if (!query) {
+                showError('queryResult', 'Please enter a query');
+                return;
+            }
+
+            setLoading('executeBtn', true);
+            clearResult('queryResult');
 
             try {
                 const response = await fetch(`${API_BASE}/query/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({ natural_query: query })
                 });
 
                 const result = await response.json();
-                const resultDiv = document.getElementById('queryResult');
-
+                
                 if (response.ok) {
-                    let html = `<div class="success">Query executed successfully!</div>`;
-                    html += `<div class="sql-query"><strong>Generated SQL:</strong><br>${result.generated_sql}</div>`;
-                    
-                    html += `<div class="query-info">
-                        <div><strong>Execution Time:</strong> ${result.execution_time.toFixed(3)}s</div>
-                        <div><strong>Rows Returned:</strong> ${result.results ? result.results.length : 0}</div>
-                    </div>`;
-                    
-                    if (result.results && result.results.length > 0) {
-                        html += `<div class="table-container">
-                            <table>
-                                <thead><tr>`;
-                        
-                        result.columns.forEach(col => {
-                            html += `<th>${col}</th>`;
-                        });
-                        html += `</tr></thead><tbody>`;
-                        
-                        result.results.slice(0, 100).forEach(row => {
-                            html += '<tr>';
-                            result.columns.forEach(col => {
-                                const value = row[col] || '';
-                                // Truncate very long values
-                                const displayValue = value.length > 100 ? value.substring(0, 100) + '...' : value;
-                                html += `<td title="${value}">${displayValue}</td>`;
-                            });
-                            html += '</tr>';
-                        });
-                        html += `</tbody></table></div>`;
-                        
-                        if (result.results.length > 100) {
-                            html += '<div class="results"><em>Showing first 100 rows only</em></div>';
-                        }
-                    }
-                    
-                    resultDiv.innerHTML = html;
+                    displayQueryResult(result);
                 } else {
-                    resultDiv.innerHTML = `<div class="error">Error: ${result.error || JSON.stringify(result)}</div>`;
+                    showError('queryResult', result.error || 'An error occurred');
                 }
             } catch (error) {
-                document.getElementById('queryResult').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+                showError('queryResult', `Network error: ${error.message}`);
+            } finally {
+                setLoading('executeBtn', false);
             }
         });
 
+        // Display query results
+        function displayQueryResult(result) {
+            let html = `<div class="success">Query executed successfully!</div>`;
+            
+            if (result.generated_sql) {
+                html += `<div class="sql-query"><strong>Generated SQL:</strong><br>${result.generated_sql}</div>`;
+            }
+            
+            if (result.execution_time !== undefined) {
+                html += `<div class="query-info">
+                    <div><strong>Execution Time:</strong> ${result.execution_time.toFixed(3)}s</div>
+                    <div><strong>Rows Returned:</strong> ${result.results ? result.results.length : 0}</div>
+                </div>`;
+            }
+            
+            if (result.results && result.results.length > 0) {
+                html += createResultsTable(result.columns, result.results);
+            }
+            
+            document.getElementById('queryResult').innerHTML = html;
+        }
+
+        // Create results table
+        function createResultsTable(columns, results) {
+            let html = `<div class="table-container">
+                <table>
+                    <thead><tr>`;
+            
+            columns.forEach(col => {
+                html += `<th>${col}</th>`;
+            });
+            html += `</tr></thead><tbody>`;
+            
+            results.slice(0, 100).forEach(row => {
+                html += '<tr>';
+                columns.forEach(col => {
+                    const value = row[col] || '';
+                    const displayValue = value.length > 100 ? value.substring(0, 100) + '...' : value;
+                    html += `<td title="${value}">${displayValue}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += `</tbody></table></div>`;
+            
+            if (results.length > 100) {
+                html += '<div class="results"><em>Showing first 100 rows only</em></div>';
+            }
+            
+            return html;
+        }
+
         // Load query history
         async function loadHistory() {
+            setLoading('historyBtn', true);
+            const section = document.getElementById('historySection');
+            const anchorY = section.getBoundingClientRect().top + window.pageYOffset - 8;
+            clearResult('historyResult');
+
             try {
                 const response = await fetch(`${API_BASE}/history/`);
                 const history = await response.json();
                 
-                let html = `<div><strong>Query History (${history.length} entries):</strong></div>`;
+                if (history.length === 0) {
+                    document.getElementById('historyResult').innerHTML = 
+                        '<div class="results">No query history found.</div>';
+                    return;
+                }
+                
+                let html = `<div class="results"><strong>Query History (${history.length} entries):</strong></div>`;
                 
                 history.forEach(entry => {
-                    const status = entry.success ? 'success' : 'error';
+                    const statusClass = entry.success ? 'status-success' : 'status-error';
+                    const statusText = entry.success ? 'Success' : 'Failed';
+                    
                     html += `<div class="results">
                         <div><strong>Query:</strong> ${entry.natural_query}</div>
                         <div class="sql-query">${entry.generated_sql}</div>
-                        <div><strong>Status:</strong> <span class="${status}">${entry.success ? 'Success' : 'Failed'}</span></div>
+                        <div><strong>Status:</strong> 
+                            <span class="status-indicator ${statusClass}"></span>${statusText}
+                        </div>
                         ${entry.execution_time ? `<div><strong>Time:</strong> ${entry.execution_time.toFixed(3)}s</div>` : ''}
                         ${entry.error_message ? `<div class="error">${entry.error_message}</div>` : ''}
                         <div><strong>Date:</strong> ${new Date(entry.created_at).toLocaleString()}</div>
@@ -465,13 +516,68 @@
                 });
                 
                 document.getElementById('historyResult').innerHTML = html;
+                // Anchor back to the history section after DOM update
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: anchorY });
+                });
             } catch (error) {
-                document.getElementById('historyResult').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+                showError('historyResult', `Error loading history: ${error.message}`);
+            } finally {
+                setLoading('historyBtn', false);
             }
         }
 
-        // Load connections on page load
-        loadConnections();
+        // Utility functions
+        function setLoading(buttonId, isLoading) {
+            const button = document.getElementById(buttonId);
+            const textSpan = button.querySelector('span:first-child');
+            const loadingSpan = button.querySelector('.loading');
+            
+            if (isLoading) {
+                button.disabled = true;
+                textSpan.style.display = 'none';
+                loadingSpan.style.display = 'inline-block';
+            } else {
+                button.disabled = false;
+                textSpan.style.display = 'inline';
+                loadingSpan.style.display = 'none';
+            }
+        }
+
+        function clearResult(elementId) {
+            document.getElementById(elementId).innerHTML = '';
+        }
+
+        function showError(elementId, message) {
+            document.getElementById(elementId).innerHTML = 
+                `<div class="error">${message}</div>`;
+        }
+
+        function clearForm() {
+            document.getElementById('naturalQuery').value = '';
+            clearResult('queryResult');
+        }
+
+        async function clearHistory() {
+            setLoading('historyBtn', true);
+            const section = document.getElementById('historySection');
+            const anchorY = section.getBoundingClientRect().top + window.pageYOffset - 8;
+            try {
+                await fetch(`${API_BASE}/history/clear/`, { method: 'DELETE' });
+                document.getElementById('historyResult').innerHTML = 
+                    '<div class="results">History cleared.</div>';
+                // Anchor back to the history section after DOM update
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: anchorY });
+                });
+            } catch (error) {
+                showError('historyResult', `Error clearing history: ${error.message}`);
+            } finally {
+                setLoading('historyBtn', false);
+            }
+        }
+
+        // Note: History will only load when the user clicks "Load History".
     </script>
 </body>
 </html>
